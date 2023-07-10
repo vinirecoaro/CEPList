@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:listacep/model/cep_model.dart';
 import 'package:listacep/repository/cep_repository.dart';
+import 'package:listacep/shared/card_label.dart';
 
 class CepListPage extends StatefulWidget {
   const CepListPage({super.key});
@@ -29,12 +30,18 @@ class _CepListPageState extends State<CepListPage> {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        title: Text("CEP's"),
+        title: const Text("CEP's"),
       ),
       body: ListView.builder(
         itemCount: _ceps.results.length,
         itemBuilder: (BuildContext bc, int index) {
           var cep = _ceps.results[index];
+          return CardLabel(
+              cepNumber: cep.cep,
+              logradouro: cep.logradouro,
+              bairro: cep.bairro,
+              localidade: cep.localidade,
+              uf: cep.uf);
         },
       ),
     ));
