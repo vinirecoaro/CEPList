@@ -56,7 +56,8 @@ class _CepListPageState extends State<CepListPage> {
                   ),
                   actions: [
                     TextButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          await cepRepository.create(cepController.text);
                           Navigator.pop(context);
                           loadData();
                         },

@@ -34,6 +34,8 @@ class CEPModel {
   String createdAt = "";
   String updatedAt = "";
 
+  CEPModel.empty();
+
   CEPModel(
       this.objectId,
       this.cep,
@@ -65,6 +67,19 @@ class CEPModel {
     updatedAt = json['updatedAt'];
   }
 
+  CEPModel.fromJsonVipCEP(Map<String, dynamic> json) {
+    cep = json['cep'];
+    logradouro = json['logradouro'];
+    complemento = json['complemento'];
+    bairro = json['bairro'];
+    localidade = json['localidade'];
+    uf = json['uf'];
+    ibge = json['ibge'];
+    gia = json['gia'];
+    ddd = json['ddd'];
+    siafi = json['siafi'];
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['objectId'] = objectId;
@@ -80,6 +95,21 @@ class CEPModel {
     data['siafi'] = siafi;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
+    return data;
+  }
+
+  Map<String, dynamic> toCreateJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['cep'] = cep;
+    data['logradouro'] = logradouro;
+    data['complemento'] = complemento;
+    data['bairro'] = bairro;
+    data['localidade'] = localidade;
+    data['uf'] = uf;
+    data['ibge'] = ibge;
+    data['gia'] = gia;
+    data['ddd'] = ddd;
+    data['siafi'] = siafi;
     return data;
   }
 }
