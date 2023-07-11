@@ -36,12 +36,19 @@ class _CepListPageState extends State<CepListPage> {
         itemCount: _ceps.results.length,
         itemBuilder: (BuildContext bc, int index) {
           var cep = _ceps.results[index];
-          return CardLabel(
-              cepNumber: cep.cep,
-              logradouro: cep.logradouro,
-              bairro: cep.bairro,
-              localidade: cep.localidade,
-              uf: cep.uf);
+          return Dismissible(
+            onDismissed: (DismissDirection dismissDirection) async {
+              await cepRepository.delete(cep.objectId);
+              loadData();
+            },
+            key: Key(cep.objectId),
+            child: CardLabel(
+                cepNumber: cep.cep,
+                logradouro: cep.logradouro,
+                bairro: cep.bairro,
+                localidade: cep.localidade,
+                uf: cep.uf),
+          );
         },
       ),
     ));
