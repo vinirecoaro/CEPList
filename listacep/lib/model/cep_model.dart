@@ -1,25 +1,25 @@
-class CEPModel {
-  List<Results> results = [];
+class CEPsModel {
+  List<CEPModel> ceps = [];
 
-  CEPModel(this.results);
+  CEPsModel(this.ceps);
 
-  CEPModel.fromJson(Map<String, dynamic> json) {
+  CEPsModel.fromJson(Map<String, dynamic> json) {
     if (json['results'] != null) {
-      results = <Results>[];
+      ceps = <CEPModel>[];
       json['results'].forEach((v) {
-        results.add(Results.fromJson(v));
+        ceps.add(CEPModel.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['results'] = results.map((v) => v.toJson()).toList();
+    data['results'] = ceps.map((v) => v.toJson()).toList();
     return data;
   }
 }
 
-class Results {
+class CEPModel {
   String objectId = "";
   String cep = "";
   String logradouro = "";
@@ -34,7 +34,7 @@ class Results {
   String createdAt = "";
   String updatedAt = "";
 
-  Results(
+  CEPModel(
       this.objectId,
       this.cep,
       this.logradouro,
@@ -49,7 +49,7 @@ class Results {
       this.createdAt,
       this.updatedAt);
 
-  Results.fromJson(Map<String, dynamic> json) {
+  CEPModel.fromJson(Map<String, dynamic> json) {
     objectId = json['objectId'];
     cep = json['cep'];
     logradouro = json['logradouro'];

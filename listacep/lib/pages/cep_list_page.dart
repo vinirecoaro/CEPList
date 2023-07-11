@@ -11,8 +11,9 @@ class CepListPage extends StatefulWidget {
 }
 
 class _CepListPageState extends State<CepListPage> {
-  var _ceps = CEPModel([]);
+  var _ceps = CEPsModel([]);
   CEPRepository cepRepository = CEPRepository();
+  var cepController = TextEditingController();
 
   @override
   void initState() {
@@ -32,10 +33,44 @@ class _CepListPageState extends State<CepListPage> {
       appBar: AppBar(
         title: const Text("CEP's"),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          cepController.text = "";
+          showDialog(
+              context: context,
+              builder: (BuildContext bc) {
+                return AlertDialog(
+                  title: const Text("Adicionar CEP"),
+                  content: Wrap(
+                    children: [
+                      TextField(
+                        controller: cepController,
+                        keyboardType: TextInputType.number,
+                        maxLength: 8,
+                        onChanged: (String value) {
+                          value.replaceAll(RegExp(r'[^0-9]'), '');
+                          setState(() {});
+                        },
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          loadData();
+                        },
+                        child: const Text("Salvar"))
+                  ],
+                );
+              });
+        },
+        child: const Icon(Icons.add),
+      ),
       body: ListView.builder(
-        itemCount: _ceps.results.length,
+        itemCount: _ceps.ceps.length,
         itemBuilder: (BuildContext bc, int index) {
-          var cep = _ceps.results[index];
+          var cep = _ceps.ceps[index];
           return Dismissible(
             onDismissed: (DismissDirection dismissDirection) async {
               await cepRepository.delete(cep.objectId);
