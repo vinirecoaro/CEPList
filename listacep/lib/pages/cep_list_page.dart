@@ -57,7 +57,14 @@ class _CepListPageState extends State<CepListPage> {
                   actions: [
                     TextButton(
                         onPressed: () async {
-                          await cepRepository.create(cepController.text);
+                          try {
+                            await cepRepository.create(cepController.text);
+                          } catch (e) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text('CEP não encontrado'),
+                            ));
+                          }
                           Navigator.pop(context);
                           loadData();
                         },
